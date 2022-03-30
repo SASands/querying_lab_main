@@ -1,4 +1,5 @@
 from hashlib import pbkdf2_hmac
+from itertools import count
 from django.shortcuts import render
 from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
@@ -145,10 +146,10 @@ SELECT `school_db_instructor`.`id`,
 # (Do not hard code his name in the print)
 def problem_three(request):
     course_primary = Course.objects.get(pk=2)
-    print(f'{course_primary.instructor.first_name} {course_primary.instructor.last_name}')
-    course_second = Course.objects.filter()
-    for course in course_primary:
-      print(f'{course.name}')
+    course_second = Course.objects.filter(instructor_id=2)
+    for course in course_second:
+      print(f'Instructor: {course_primary.instructor.first_name} {course_primary.instructor.last_name} \n Course: {course.name}')
+
     return complete(request)
 
 # Supporting Query Method Documentation:
@@ -193,8 +194,11 @@ SELECT `school_db_instructor`.`id`,
 
 # Get the count of students, courses, and instructors and print them in the terminal
 def problem_four(request):
+    student_count = Student.objects.count()
+    coureses_count = Course.objects.count()
+    instructors_count = Instructor.objects.count()
 
-
+    print(f'Student count: {student_count} \n Course count: {coureses_count} \n Instructor count: {instructors_count}')
 
     return complete(request)
 
@@ -239,8 +243,8 @@ SELECT COUNT(*) AS `__count`
 # Print the new student's id, full name, year, and gpa to the terminal
 # NOTE every time you execute this function a duplicate student will be created with a different primary key number
 def problem_five(request):
-
-
+    new_student = Student.objects.create(first_name='Sean', last_name='Sands', year=10, gpa=3.5)
+    print(f'ID:{student_id} \n Full Name: {student.first_name} {student.last_name} \n Year: {student.year} \n {student.gpa}')
 
     return complete(request)
 
