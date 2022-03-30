@@ -1,3 +1,4 @@
+from hashlib import pbkdf2_hmac
 from django.shortcuts import render
 from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
@@ -100,10 +101,13 @@ SELECT `school_db_student`.`id`,
 # Order by hire date ascending
 # Print out the instructor's full name and hire date to the terminal
 def problem_two(request):
-
-
+    instructors = Instructor.objects.filter(hire_date__year__lt=2010).order_by('hire_date')
+    for instructor in instructors:
+      print(f'Full Name:{instructor.first_name} {instructor.last_name} hire_date: {instructor.hire_date}') 
 
     return complete(request)
+
+
 
 
 # Supporting Query Method Documentation:
@@ -140,11 +144,12 @@ SELECT `school_db_instructor`.`id`,
 # Print the instructors name and courses that he belongs to in the terminal 
 # (Do not hard code his name in the print)
 def problem_three(request):
-
-
-
+    course_primary = Course.objects.get(pk=2)
+    print(f'{course_primary.instructor.first_name} {course_primary.instructor.last_name}')
+    course_second = Course.objects.filter()
+    for course in course_primary:
+      print(f'{course.name}')
     return complete(request)
-
 
 # Supporting Query Method Documentation:
 """
